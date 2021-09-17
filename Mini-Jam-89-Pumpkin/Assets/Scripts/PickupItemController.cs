@@ -4,59 +4,54 @@ using UnityEngine;
 
 public class PickupItemController : MonoBehaviour
 {
-    public Transform holdSpot;
-    public LayerMask pickUpMask;
-    public Vector3 Direction { get; set; }
-    private GameObject itemHolding;
+    [SerializeField]
+    private Transform holdPosition;
+    [SerializeField]
+    private Transform pickupPosition;
+    [SerializeField]
+    private LayerMask layerMask;
+    [SerializeField]
+    private float pickupRadius = 0;
+    
+    private GameObject currentItem;
 
     void Update()
     {
+        //Pickup
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (itemHolding)
+            if (currentItem == null)
             {
-                itemHolding.transform.position = transform.position + Direction;
-                itemHolding.transform.parent = null;
-                if (itemHolding.GetComponent<Rigidbody2D>())
-                    itemHolding.GetComponent<Rigidbody2D>().simulated = true;
-                itemHolding = null;
+                //look for items
+                Collider2D itemCollider = Physics2D.OverlapCircle(pickupPosition.position, pickupRadius, layerMask);
+
+                if (itemCollider != null)
+                {
+                    currentItem = itemCollider.gameObject;
+
+                    itemCollider.attachedRigidbody.simulated = false;
+                    itemCollider.enabled = false;
+
+                    itemCollider.transform.parent = holdPosition.transform;
+                    itemCollider.transform.localPosition = Vector3.zero;
+                }
+
             }
             else
             {
-                Collider2D pickUpItem = Physics2D.OverlapCircle(transform.position + Direction, 0.4f, pickUpMask);
-                if (pickUpItem)
-                {
-                    itemHolding = pickUpItem.gameObject;
-                    itemHolding.transform.position = holdSpot.position;
-                    itemHolding.transform.parent = transform;
-                    if (itemHolding.GetComponent<Rigidbody2D>())
-                        itemHolding.GetComponent<Rigidbody2D>().simulated = false;
-                }
-            }
+                currentItem.transform.parent = null;
 
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (itemHolding)
-            {
-                StartCoroutine(ThrowItem(itemHolding));
-                itemHolding = null;
+                Collider2D itemCollider = currentItem.GetComponent<Collider2D>();
+
+                itemCollider.attachedRigidbody.simulated = true;
+                itemCollider.enabled = true;
+
+                currentItem = null;
+
+
             }
         }
     }
 
-    IEnumerator ThrowItem(GameObject item)
-    {
-        Vector3 startPoint = item.transform.position;
-        Vector3 endPoint = transform.position + Direction * 2;
-        item.transform.parent = null;
-        for (int i = 0; i < 25; i++)
-        {
-            item.transform.position = Vector3.Lerp(startPoint, endPoint, i * .04f);
-            yield return null;
-        }
-        if (item.GetComponent<Rigidbody2D>())
-            item.GetComponent<Rigidbody2D>().simulated = true;
-        Destroy(item);
-    }
+    
 }
