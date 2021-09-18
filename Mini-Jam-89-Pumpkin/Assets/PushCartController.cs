@@ -10,6 +10,8 @@ public class PushCartController : MonoBehaviour
     private float speed = 0;
     [SerializeField]
     private float damage = 0;
+    [SerializeField]
+    private ParticleSystem pushCartParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,9 @@ public class PushCartController : MonoBehaviour
             }
 
             //TBA slow horseman
+            pushCartParticles.transform.parent = null;
+            pushCartParticles.Play();
+
             Destroy(gameObject, 0);
         }
     }

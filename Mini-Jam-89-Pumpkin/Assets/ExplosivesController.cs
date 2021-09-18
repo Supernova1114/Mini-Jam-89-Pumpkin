@@ -5,6 +5,8 @@ using UnityEngine;
 public class ExplosivesController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject explosionPoint;
+    [SerializeField]
     private float fuseTime = 0;
     [SerializeField]
     private float explosionRadius = 0;
@@ -12,6 +14,10 @@ public class ExplosivesController : MonoBehaviour
     [SerializeField]
     private float damage = 0;
 
+    [SerializeField]
+    private ParticleSystem fuseParticles;
+    [SerializeField]
+    private ParticleSystem explosionParticles;
     //Explosives that can be placed or thrown (?)
 
     private void Start()
@@ -26,13 +32,15 @@ public class ExplosivesController : MonoBehaviour
 
     IEnumerator StartFuse()
     {
-        //TBA play sound and particles for fuse
+        fuseParticles.Play();
 
         yield return new WaitForSeconds(fuseTime);
 
+        fuseParticles.Stop();
+        
         //TBA play explosion particles and sound
 
-        Collider2D[] colliderList = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        Collider2D[] colliderList = Physics2D.OverlapCircleAll(explosionPoint.transform.position, explosionRadius);
 
 
         for (int i=0; i<colliderList.Length; i++)
@@ -45,6 +53,10 @@ public class ExplosivesController : MonoBehaviour
                 damageHandler.Hurt(damage);
             }
         }
+
+        //Destroy(gameObject, 0);
+        explosionPoint.transform.parent = null;
+        explosionParticles.Play();
 
         Destroy(gameObject, 0);
 

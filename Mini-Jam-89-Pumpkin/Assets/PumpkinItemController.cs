@@ -6,6 +6,8 @@ public class PumpkinItemController : MonoBehaviour
 {
     [SerializeField]
     private float damage = 0;
+    [SerializeField]
+    private ParticleSystem pumpkinParticles;
 
     //A throwable pumpkin
 
@@ -20,6 +22,9 @@ public class PumpkinItemController : MonoBehaviour
 
                 //TBA play sound and particles
             }
+
+            pumpkinParticles.transform.parent = null;
+            pumpkinParticles.Play();
 
             Destroy(gameObject, 0);
         }

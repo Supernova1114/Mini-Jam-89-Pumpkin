@@ -5,21 +5,26 @@ using UnityEngine;
 public class BearTrapController : MonoBehaviour
 {
     [SerializeField]
+    private ParticleSystem bearTrapParticles;
+    [SerializeField]
+    private SpriteRenderer spriteRenderer;
+    [SerializeField]
+    private Sprite closedSprite;
+    [SerializeField]
+    private Sprite openedSprite;
+    [SerializeField]
     private float damage = 0;
 
     private bool triggered = false;
 
     //A bear trap you can place down and lure the Horseman into it. Can only be used one (?)
 
-    /*void Start()
+    void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = openedSprite;
         
     }
-
-    void Update()
-    {
-        
-    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,6 +33,8 @@ public class BearTrapController : MonoBehaviour
         if (triggered == false && collision.CompareTag("Horseman"))
         {
             triggered = true;
+
+            spriteRenderer.sprite = closedSprite;
 
             DamageHandler damageHandler = collision.GetComponent<DamageHandler>();
             if (damageHandler != null)
@@ -39,9 +46,20 @@ public class BearTrapController : MonoBehaviour
             }
 
             //Should let player reset bear trap?
-            Destroy(gameObject, 10);
+
+            StartCoroutine("Finish");
 
         }
+    }
+
+    private IEnumerator Finish()
+    {
+        yield return new WaitForSeconds(7);
+
+        bearTrapParticles.transform.parent = null;
+        bearTrapParticles.Play();
+
+        Destroy(gameObject, 0);
     }
 
 }
