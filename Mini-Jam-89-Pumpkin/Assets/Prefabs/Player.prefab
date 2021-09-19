@@ -126,7 +126,6 @@ MonoBehaviour:
   movespeed: 6
   sprintspeed: 1.5
   placeRotator: {fileID: 6517809828812932865}
-  placePosition: {fileID: 0}
   animator: {fileID: 6517809828482172917}
 --- !u!114 &6517809828482172916
 MonoBehaviour:
@@ -145,7 +144,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  pickupRadius: 1
+  pickupRadius: 2
   playerController: {fileID: 6517809828482172923}
 --- !u!95 &6517809828482172917
 Animator:

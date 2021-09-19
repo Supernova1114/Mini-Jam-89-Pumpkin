@@ -20,11 +20,15 @@ public class ExplosivesController : MonoBehaviour
     private ParticleSystem explosionParticles;
     //Explosives that can be placed or thrown (?)
 
+    private void Update()
+    {
+        Debug.DrawLine(explosionPoint.transform.position, (Vector2)explosionPoint.transform.position + new Vector2(explosionRadius, 0));
+    }
+
     private void Start()
     {
         Explode();
     }
-
     public void Explode()
     {
         StartCoroutine("StartFuse");
@@ -41,7 +45,6 @@ public class ExplosivesController : MonoBehaviour
         //TBA play explosion particles and sound
 
         Collider2D[] colliderList = Physics2D.OverlapCircleAll(explosionPoint.transform.position, explosionRadius);
-
 
         for (int i=0; i<colliderList.Length; i++)
         {

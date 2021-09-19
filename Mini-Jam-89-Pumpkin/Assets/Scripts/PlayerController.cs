@@ -17,14 +17,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject placeRotator;
-    [SerializeField]
-    private GameObject placePosition;
     
 
     [SerializeField]
     private Animator animator;
     private bool isSprinting = false;
-    private int lastDirection = 0;
 
     void Awake()
     {
@@ -86,7 +83,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public float getAngle()
+    public float GetAngle()
     {
         return angle;
     }
