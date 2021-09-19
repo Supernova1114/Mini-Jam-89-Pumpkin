@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    [SerializeField]
+    private Rigidbody2D rb;
+    [SerializeField]
+    private float movespeed = 6f;
+    [SerializeField]
+    private float sprintspeed = 1f;
+    private float sprint = 1f;
+    private Vector2 movement;
 
-    public float movespeed = 6f;
-    public float sprintspeed = 1f;
-    Vector2 movement;
+    private float angle;
 
-    Vector2 direction = new Vector2();
+    [SerializeField]
+    private GameObject placeRotator;
+    [SerializeField]
+    private GameObject placePosition;
+    
+
+    [SerializeField]
+    private Animator animator;
+    private bool isSprinting = false;
+    private int lastDirection = 0;
 
     void Awake()
     {
@@ -21,6 +35,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0.0f;
     }
 
+
     void Update()
     {
         Move();
@@ -28,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + (movespeed * sprintspeed * Time.fixedDeltaTime * movement));
+        rb.MovePosition(rb.position + (movespeed * sprint * Time.fixedDeltaTime * movement));
     }
 
     private void Move() 
@@ -36,24 +51,44 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
+       
+
         if (movement != Vector2.zero)
         {
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(movement.y, movement.x);
+            angle = Mathf.Rad2Deg * Mathf.Atan2(movement.y, movement.x);
 
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            placeRotator.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
 
         if (Input.GetKey(KeyCode.LeftShift)){
-            sprintspeed = 2;
+            sprint = sprintspeed;
+            isSprinting = true;
         }
         else
         {
-            sprintspeed = 1;
+            //reset
+            sprint = 1;
+            isSprinting = false;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift)){
-            sprintspeed = 1;
+            //reset
+            sprint = 1;
+            isSprinting = false;
         }
+
+        animator.SetBool("isSprinting", isSprinting);
+        animator.SetInteger("movementX", (int)movement.x);
+        animator.SetInteger("movementY", (int)movement.y);
+        
+        
+        
     }
+
+    public float getAngle()
+    {
+        return angle;
+    }
+
 }

@@ -12,11 +12,27 @@ public class PickupItemController : MonoBehaviour
     private LayerMask layerMask;
     [SerializeField]
     private float pickupRadius = 0;
+    [SerializeField]
+    private PlayerController playerController;
     
     private GameObject currentItem;
+    private SpriteRenderer spriteRenderer;
 
     void Update()
     {
+        if (currentItem != null)
+        {
+            float angle = playerController.getAngle();
+            if (angle > 0 && angle < 180)
+            {
+                spriteRenderer.sortingOrder = -1;
+            }
+            else
+            {
+                spriteRenderer.sortingOrder = 1;
+            }
+        }
+
         //Pickup
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -28,6 +44,7 @@ public class PickupItemController : MonoBehaviour
                 if (itemCollider != null)
                 {
                     currentItem = itemCollider.gameObject;
+                    spriteRenderer = currentItem.GetComponent<SpriteRenderer>();
 
                     itemCollider.attachedRigidbody.simulated = false;
                     itemCollider.enabled = false;
