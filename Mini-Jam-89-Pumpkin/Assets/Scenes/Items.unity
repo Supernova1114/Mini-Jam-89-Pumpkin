@@ -432,6 +432,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horseman
       objectReference: {fileID: 0}
+    - target: {fileID: 6367815897588234350, guid: ab263399cec3a094fad4889d2d26a0d2, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab263399cec3a094fad4889d2d26a0d2, type: 3}
 --- !u!1001 &7900812090516587525
