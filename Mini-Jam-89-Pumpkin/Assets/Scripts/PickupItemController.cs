@@ -9,7 +9,9 @@ public class PickupItemController : MonoBehaviour
     [SerializeField]
     private Transform pickupPosition;
     [SerializeField]
-    private LayerMask layerMask;
+    private LayerMask itemMask;
+    [SerializeField]
+    private LayerMask usableMask;
     [SerializeField]
     private float pickupRadius = 0;
     [SerializeField]
@@ -25,24 +27,39 @@ public class PickupItemController : MonoBehaviour
     {
         float angle = playerController.GetAngle();
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            if (currentItem != null && currentItem.CompareTag("ThrowableItem"))
+            if (currentItem != null)
             {
-
-                Collider2D itemCollider = DropItem();
-                spriteRenderer.sortingOrder = -1;
-
-                ExplosivesController explosives = currentItem.GetComponent<ExplosivesController>();
-                if (explosives != null)
+                //try to use current item in hand
+                if (currentItem.CompareTag("ThrowableItem"))
                 {
-                    currentItem.layer = 0;
-                    explosives.Explode();
+                    Collider2D itemCollider = DropItem();
+                    spriteRenderer.sortingOrder = -1;
+
+                    ExplosivesController explosives = currentItem.GetComponent<ExplosivesController>();
+                    if (explosives != null)
+                    {
+                        currentItem.layer = 0;
+                        explosives.Explode();
+                    }
+
+                    itemCollider.attachedRigidbody.velocity = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle)).normalized * throwVelocity;
+
+                    currentItem = null;
                 }
 
-                itemCollider.attachedRigidbody.velocity = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle)).normalized * throwVelocity;
+            }
+            else
+            {
+                print("USE");
+                //try to do Use Action
+                Collider2D itemCollider = Physics2D.OverlapCircle(pickupPosition.position, pickupRadius, usableMask.value);
+                if (itemCollider != null)
+                {
+                    itemCollider.SendMessage("Use");
+                }
 
-                currentItem = null;
             }
         }
 
@@ -67,7 +84,7 @@ public class PickupItemController : MonoBehaviour
             if (currentItem == null)
             {
                 //look for items
-                Collider2D itemCollider = Physics2D.OverlapCircle(pickupPosition.position, pickupRadius, layerMask);
+                Collider2D itemCollider = Physics2D.OverlapCircle(pickupPosition.position, pickupRadius, itemMask.value);
 
                 if (itemCollider != null)
                 {

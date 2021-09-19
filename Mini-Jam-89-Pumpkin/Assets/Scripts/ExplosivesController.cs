@@ -7,6 +7,8 @@ public class ExplosivesController : MonoBehaviour
     [SerializeField]
     private GameObject explosionPoint;
     [SerializeField]
+    private GameObject visualRadius;
+    [SerializeField]
     private float fuseTime = 0;
     [SerializeField]
     private float explosionRadius = 0;
@@ -18,6 +20,7 @@ public class ExplosivesController : MonoBehaviour
     private ParticleSystem fuseParticles;
     [SerializeField]
     private ParticleSystem explosionParticles;
+
     //Explosives that can be placed or thrown (?)
 
     private void Update()
@@ -27,7 +30,7 @@ public class ExplosivesController : MonoBehaviour
 
     private void Start()
     {
-        Explode();
+        visualRadius.SetActive(false);
     }
     public void Explode()
     {
@@ -36,6 +39,9 @@ public class ExplosivesController : MonoBehaviour
 
     IEnumerator StartFuse()
     {
+        visualRadius.SetActive(true);
+        visualRadius.transform.localScale = new Vector3(1, 1, 0) * explosionRadius * 2;
+
         fuseParticles.Play();
 
         yield return new WaitForSeconds(fuseTime);

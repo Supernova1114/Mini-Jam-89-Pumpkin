@@ -141,10 +141,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdPosition: {fileID: 6517809829019946338}
   pickupPosition: {fileID: 6517809828482172919}
-  layerMask:
+  itemMask:
     serializedVersion: 2
     m_Bits: 64
+  usableMask:
+    serializedVersion: 2
+    m_Bits: 128
   pickupRadius: 2
+  throwVelocity: 1
   playerController: {fileID: 6517809828482172923}
 --- !u!95 &6517809828482172917
 Animator:

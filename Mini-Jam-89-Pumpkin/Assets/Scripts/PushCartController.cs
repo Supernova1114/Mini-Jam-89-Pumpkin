@@ -9,27 +9,51 @@ public class PushCartController : MonoBehaviour
     [SerializeField]
     private float speed = 0;
     [SerializeField]
+    private float acceleration = 0;
+    [SerializeField]
     private float damage = 0;
     [SerializeField]
     private ParticleSystem pushCartParticles;
 
+    private bool shouldHurt = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        body.velocity = transform.right * speed;
+        body.bodyType = RigidbodyType2D.Static;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Use()
     {
-        if (collision.CompareTag("Horseman"))
+        body.bodyType = RigidbodyType2D.Dynamic;
+        shouldHurt = true;
+
+        Destroy(gameObject, 10);
+    }
+
+    private void Update()
+    {
+        if (shouldHurt)
         {
-            DamageHandler damageHandler = collision.GetComponent<DamageHandler>();
-            if (damageHandler != null)
+            body.velocity = transform.right * speed;
+            speed += acceleration;
+        }
+    }
+
+    public void HandleCollision(Collider2D collision)
+    {
+        if (shouldHurt == true)
+        {
+            if (collision.CompareTag("Horseman"))
             {
-                damageHandler.Hurt(damage);
-                
-                //TBA play sound and particles
+                DamageHandler damageHandler = collision.GetComponent<DamageHandler>();
+                if (damageHandler != null)
+                {
+                    damageHandler.Hurt(damage);
+
+                }
             }
+            
 
             //TBA slow horseman
             pushCartParticles.transform.parent = null;
