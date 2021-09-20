@@ -17,14 +17,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject placeRotator;
-    [SerializeField]
-    private GameObject placePosition;
     
 
     [SerializeField]
     private Animator animator;
     private bool isSprinting = false;
-    private int lastDirection = 0;
 
     void Awake()
     {
@@ -62,17 +59,14 @@ public class PlayerController : MonoBehaviour
 
 
         if (Input.GetKey(KeyCode.LeftShift)){
-            if (StaminaController.instance.CheckStamina() == 0)
-            {
-                sprint = 1;
-                isSprinting = false;
-            }
-            else 
-            {
-                sprint = sprintspeed;
-                isSprinting = true;
-                StaminaController.instance.SprintCost(1);
-            }    
+            sprint = sprintspeed;
+            isSprinting = true;
+        }
+        else
+        {
+            //reset
+            sprint = 1;
+            isSprinting = false;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift)){
@@ -89,7 +83,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public float getAngle()
+    public float GetAngle()
     {
         return angle;
     }
