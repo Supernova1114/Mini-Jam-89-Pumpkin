@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StaminaController : MonoBehaviour
 {
     public Slider staminaBar;
-    private int maxStamina = 500;
+    private int maxStamina = 1000;
     private int currentStamina;
     private Coroutine regen;
 
@@ -41,7 +41,7 @@ public class StaminaController : MonoBehaviour
     }
     private IEnumerator RegenStamina() 
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         while (currentStamina < maxStamina) 
         {
