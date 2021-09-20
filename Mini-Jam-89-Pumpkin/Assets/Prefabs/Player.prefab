@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6517809828482172920}
   - component: {fileID: 6517809828482172923}
   - component: {fileID: 6517809828482172916}
+  - component: {fileID: -5474663500956636861}
   - component: {fileID: 6517809828482172917}
   - component: {fileID: 6517809828482172921}
   - component: {fileID: 6517809828482172914}
@@ -150,6 +151,23 @@ MonoBehaviour:
   pickupRadius: 2
   throwVelocity: 15
   playerController: {fileID: 6517809828482172923}
+--- !u!114 &-5474663500956636861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6517809828482172922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d261a94374d97324bb6e9293547b3232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  infiniteSprintTime: 0
+  invulTime: 2
+  invulFlashInterval: 0.1
+  spriteRenderer: {fileID: 6517809828482172918}
 --- !u!95 &6517809828482172917
 Animator:
   serializedVersion: 3
