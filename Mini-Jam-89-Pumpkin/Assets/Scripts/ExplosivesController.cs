@@ -7,8 +7,6 @@ public class ExplosivesController : MonoBehaviour
     [SerializeField]
     private GameObject explosionPoint;
     [SerializeField]
-    private GameObject visualRadius;
-    [SerializeField]
     private float fuseTime = 0;
     [SerializeField]
     private float explosionRadius = 0;
@@ -20,18 +18,13 @@ public class ExplosivesController : MonoBehaviour
     private ParticleSystem fuseParticles;
     [SerializeField]
     private ParticleSystem explosionParticles;
-
     //Explosives that can be placed or thrown (?)
-
-    private void Update()
-    {
-        Debug.DrawLine(explosionPoint.transform.position, (Vector2)explosionPoint.transform.position + new Vector2(explosionRadius, 0));
-    }
 
     private void Start()
     {
-        visualRadius.SetActive(false);
+        Explode();
     }
+
     public void Explode()
     {
         StartCoroutine("StartFuse");
@@ -39,9 +32,6 @@ public class ExplosivesController : MonoBehaviour
 
     IEnumerator StartFuse()
     {
-        visualRadius.SetActive(true);
-        visualRadius.transform.localScale = new Vector3(1, 1, 0) * explosionRadius * 2;
-
         fuseParticles.Play();
 
         yield return new WaitForSeconds(fuseTime);
@@ -51,6 +41,7 @@ public class ExplosivesController : MonoBehaviour
         //TBA play explosion particles and sound
 
         Collider2D[] colliderList = Physics2D.OverlapCircleAll(explosionPoint.transform.position, explosionRadius);
+
 
         for (int i=0; i<colliderList.Length; i++)
         {
