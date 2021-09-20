@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6367815897588234345}
   m_Layer: 0
   m_Name: Horseman
-  m_TagString: Untagged
+  m_TagString: Horseman
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

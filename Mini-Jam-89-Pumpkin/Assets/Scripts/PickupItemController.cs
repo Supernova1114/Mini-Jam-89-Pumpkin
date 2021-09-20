@@ -27,7 +27,7 @@ public class PickupItemController : MonoBehaviour
     {
         float angle = playerController.GetAngle();
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (currentItem != null)
             {
@@ -37,14 +37,20 @@ public class PickupItemController : MonoBehaviour
                     Collider2D itemCollider = DropItem();
                     spriteRenderer.sortingOrder = -1;
 
-                    ExplosivesController explosives = currentItem.GetComponent<ExplosivesController>();
-                    if (explosives != null)
+                    ExplosivesController explosivesController = currentItem.GetComponent<ExplosivesController>();
+                    if (explosivesController != null)
                     {
+                        explosivesController.Explode();
                         currentItem.layer = 0;
-                        explosives.Explode();
                     }
 
                     itemCollider.attachedRigidbody.velocity = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle)).normalized * throwVelocity;
+
+                    PumpkinItemController pumpkinController = currentItem.GetComponent<PumpkinItemController>();
+                    if (pumpkinController != null)
+                    {
+                        pumpkinController.setCheckVelocity(true);
+                    }
 
                     currentItem = null;
                 }
@@ -52,7 +58,7 @@ public class PickupItemController : MonoBehaviour
             }
             else
             {
-                print("USE");
+                //print("USE");
                 //try to do Use Action
                 Collider2D itemCollider = Physics2D.OverlapCircle(pickupPosition.position, pickupRadius, usableMask.value);
                 if (itemCollider != null)

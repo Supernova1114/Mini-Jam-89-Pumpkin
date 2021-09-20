@@ -148,7 +148,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   pickupRadius: 2
-  throwVelocity: 1
+  throwVelocity: 15
   playerController: {fileID: 6517809828482172923}
 --- !u!95 &6517809828482172917
 Animator:
