@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Map
+  - 
   - Water
   - UI
   - Item
@@ -41,15 +41,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: BackgroundMap
-    uniqueID: 3280506993
-    locked: 0
-  - name: TreesInfront
-    uniqueID: 4064515993
-    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Trees
-    uniqueID: 2124200015
     locked: 0

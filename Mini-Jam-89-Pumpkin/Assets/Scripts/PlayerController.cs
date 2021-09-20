@@ -59,17 +59,14 @@ public class PlayerController : MonoBehaviour
 
 
         if (Input.GetKey(KeyCode.LeftShift)){
-            if (StaminaController.instance.CheckStamina() == 0)
-            {
-                sprint = 1;
-                isSprinting = false;
-            }
-            else 
-            {
-                sprint = sprintspeed;
-                isSprinting = true;
-                StaminaController.instance.SprintCost(1);
-            }    
+            sprint = sprintspeed;
+            isSprinting = true;
+        }
+        else
+        {
+            //reset
+            sprint = 1;
+            isSprinting = false;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift)){
