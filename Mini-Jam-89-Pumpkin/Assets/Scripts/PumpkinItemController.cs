@@ -43,7 +43,7 @@ public class PumpkinItemController : MonoBehaviour
 
     private void Update()
     {
-        print(body.velocity.magnitude);
+        
         if (checkVelocity && body.velocity.magnitude > damageSpeed)
         {
             shouldHurt = true;
