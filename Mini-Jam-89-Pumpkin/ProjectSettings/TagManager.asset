@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Items
+  - Horseman
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Map
   - Water
   - UI
   - Item
@@ -39,6 +40,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackgroundMap
+    uniqueID: 2305760571
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Trees
+    uniqueID: 3081803301
     locked: 0
